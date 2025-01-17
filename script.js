@@ -1,8 +1,4 @@
-// Seleciona todos os botões "Ler mais"
-const botoesLerMais = document.querySelectorAll('.btn-ler-mais');
-
-// Adiciona evento de clique para cada botão
-botoesLerMais.forEach(botao => {
+function adicionarEventoBotaoLerMais(botao) {
     botao.addEventListener('click', () => {
         const post = botao.parentElement;
         const conteudo = post.querySelector('p');
@@ -15,9 +11,14 @@ botoesLerMais.forEach(botao => {
             botao.textContent = 'Ler menos';
         }
     });
+}
+
+const botoesLerMais = document.querySelectorAll('.btn-ler-mais');
+
+botoesLerMais.forEach(botao => {
+    adicionarEventoBotaoLerMais(botao);
 });
 
-// Função para adicionar novo post
 function adicionarPost(titulo, conteudo) {
     const posts = document.getElementById('posts');
     const novoPost = document.createElement('article');
@@ -33,7 +34,23 @@ function adicionarPost(titulo, conteudo) {
     `;
     
     posts.insertBefore(novoPost, posts.firstChild);
+
+    // Adiciona evento ao novo botão "Ler mais"
+    const novoBotao = novoPost.querySelector('.btn-ler-mais');
+    adicionarEventoBotaoLerMais(novoBotao);
 }
 
-// Exemplo de como adicionar um novo post
-// adicionarPost('Novo Post', 'Conteúdo do novo post...'); 
+function criarNovoPost() {
+    const titulo = document.getElementById('titulo-post').value;
+    const conteudo = document.getElementById('conteudo-post').value;
+    
+    if (titulo.trim() === '' || conteudo.trim() === '') {
+        alert('Por favor, preencha todos os campos!');
+        return;
+    }
+    
+    adicionarPost(titulo, conteudo);
+    
+    document.getElementById('titulo-post').value = '';
+    document.getElementById('conteudo-post').value = '';
+} 
