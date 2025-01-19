@@ -3,28 +3,41 @@ function adicionarEventoBotaoLerMais(botao) {
     const post = botao.parentElement;
     const conteudo = post.querySelector("p");
 
-    if (conteudo.style.maxHeight) {
-      conteudo.style.maxHeight = null;
+    if (conteudo.classList.contains("expandido")) {
+      conteudo.classList.remove("expandido");
       botao.textContent = "Ler mais";
     } else {
-      conteudo.style.maxHeight = conteudo.scrollHeight + "px";
+      conteudo.classList.add("expandido");
       botao.textContent = "Ler menos";
     }
   });
 }
 
-const botoesLerMais = document.querySelectorAll(".btn-ler-mais");
+function salvarPosts() {
+  const posts = Array.from(document.querySelectorAll(".post")).map((post) => {
+    const titulo = post.querySelector("h2").textContent;
+    const data = post.querySelector(".data").textContent;
+    const conteudo = post.querySelector("p").textContent;
+    return { titulo, data, conteudo };
+  });
+  localStorage.setItem("posts", JSON.stringify(posts));
+}
 
-botoesLerMais.forEach((botao) => {
-  adicionarEventoBotaoLerMais(botao);
-});
+function carregarPosts() {
+  const postsSalvos = JSON.parse(localStorage.getItem("posts") || "[]");
+  postsSalvos.forEach(({ titulo, data, conteudo }) => {
+    adicionarPost(titulo, conteudo, data);
+  });
+}
 
-function adicionarPost(titulo, conteudo) {
+function adicionarPost(
+  titulo,
+  conteudo,
+  data = new Date().toLocaleDateString(),
+) {
   const posts = document.getElementById("posts");
   const novoPost = document.createElement("article");
   novoPost.className = "post";
-
-  const data = new Date().toLocaleDateString();
 
   novoPost.innerHTML = `
         <h2>${titulo}</h2>
@@ -35,9 +48,10 @@ function adicionarPost(titulo, conteudo) {
 
   posts.insertBefore(novoPost, posts.firstChild);
 
-  // Adiciona evento ao novo botão "Ler mais"
   const novoBotao = novoPost.querySelector(".btn-ler-mais");
   adicionarEventoBotaoLerMais(novoBotao);
+
+  salvarPosts();
 }
 
 function criarNovoPost() {
@@ -54,3 +68,6 @@ function criarNovoPost() {
   document.getElementById("titulo-post").value = "";
   document.getElementById("conteudo-post").value = "";
 }
+
+// Carregar posts ao iniciar a página
+document.addEventListener("DOMContentLoaded", carregarPosts);
