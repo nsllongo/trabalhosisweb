@@ -8,6 +8,10 @@ body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
   background-color: #f4f4f4;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
 }
 
 header {
@@ -16,19 +20,17 @@ header {
   padding: 1rem;
 }
 
-nav ul {
-  display: flex;
-  list-style: none;
-  justify-content: center;
-  gap: 1rem;
-}
-
 nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
   max-width: 1200px;
   margin: 0 auto;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
 }
 
 nav ul li a {
@@ -43,12 +45,22 @@ nav ul li a:hover {
 }
 
 main {
+  flex: 1;
   max-width: 1200px;
   margin: 2rem auto;
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 2rem;
   padding: 0 1rem;
+}
+
+#posts {
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  border-radius: 4px;
 }
 
 .post {
@@ -59,11 +71,23 @@ main {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+.post p {
+  max-height: 100px;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.post p.expandido {
+  max-height: 1000px;
+  overflow: visible;
+}
+
 .data {
   color: #666;
   font-size: 0.9rem;
 }
 
+/* Botões */
 .btn-ler-mais {
   background-color: #333;
   color: white;
@@ -76,6 +100,19 @@ main {
 
 .btn-ler-mais:hover {
   background-color: #555;
+}
+
+.btn-criar-post {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.btn-criar-post:hover {
+  background-color: #45a049;
 }
 
 .perfil {
@@ -96,34 +133,9 @@ footer {
   color: white;
   text-align: center;
   padding: 1rem;
-  position: fixed;
+  position: relative;
   bottom: 0;
   width: 100%;
-}
-
-@media (max-width: 768px) {
-  main {
-    grid-template-columns: 1fr;
-  }
-
-  nav {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  nav ul {
-    margin-top: 1rem;
-    flex-direction: column;
-  }
-
-  nav ul li {
-    margin: 0.5rem 0;
-  }
-}
-
-.post p {
-  overflow: hidden;
-  transition: max-height 0.3s ease-out;
 }
 
 .novo-post-form {
@@ -144,19 +156,8 @@ footer {
 }
 
 .novo-post-form textarea {
-  height: 100px;
+  max-width: 100%;
+  max-height: 150px;
+  overflow-y: auto;
   resize: vertical;
-}
-
-.btn-criar-post {
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 3px;
-  cursor: pointer;
-}
-
-.btn-criar-post:hover {
-  background-color: #45a049;
 }
