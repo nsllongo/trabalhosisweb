@@ -4,31 +4,20 @@
   box-sizing: border-box;
 }
 
-:root {
-  --primary-color: #2c3e50;
-  --secondary-color: #3498db;
-  --accent-color: #e74c3c;
-  --text-color: #333;
-  --light-bg: #ecf0f1;
-  --white: #ffffff;
-}
-
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: Arial, sans-serif;
   line-height: 1.6;
-  background-color: var(--light-bg);
+  background-color: #f4f4f4;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   margin: 0;
-  color: var(--text-color);
 }
 
 header {
-  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-  color: var(--white);
-  padding: 1.5rem;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #333;
+  color: white;
+  padding: 1rem;
 }
 
 nav {
@@ -39,44 +28,34 @@ nav {
   margin: 0 auto;
 }
 
-nav h1 {
-  font-size: 2rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
 nav ul {
   display: flex;
   list-style: none;
-  gap: 1rem;
 }
 
 nav ul li a {
-  color: var(--white);
+  color: white;
   text-decoration: none;
-  padding: 0.7rem 1.2rem;
-  border-radius: 25px;
-  transition: all 0.3s ease;
-  font-weight: 500;
+  padding: 0.5rem 1rem;
 }
 
 nav ul li a:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-  transform: translateY(-2px);
+  background-color: #555;
+  border-radius: 3px;
 }
 
 main {
   flex: 1;
   max-width: 1200px;
   margin: 2rem auto;
-  padding: 0 2rem;
   display: grid;
   grid-template-columns: 2fr 1fr; 
   gap: 2rem;
+  padding: 0 1rem;
 }
 
-.posts-container {
+#posts {
+  max-height: 400px;
   overflow-y: auto;
   max-height: 80vh; 
   padding-right: 1rem;
@@ -96,127 +75,63 @@ main {
   border-radius: 4px;
 }
 
-.sidebar {
-  position: sticky;
-  top: 2rem;
-  height: fit-content;
-}
-
-.novo-post-form {
-  position: sticky;
-  top: 2rem;
-}
-
-main h2 {
-  color: var(--primary-color);
-  font-size: 2.5rem;
-  margin-bottom: 1.5rem;
-  text-align: center;
-}
-
-main p {
-  font-size: 1.1rem;
-  color: var(--text-color);
-  line-height: 1.8;
-  margin-bottom: 1.5rem;
-}
-
 .post {
-  background-color: var(--white);
-  padding: 2rem;
-  margin-bottom: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+  background-color: white;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.post:hover {
-  transform: translateY(-5px);
+.post p {
+  max-height: 100px;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
 }
 
-.post h2 {
-  color: var(--primary-color);
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
+.post p.expandido {
+  max-height: 1000px;
+  overflow: visible;
 }
 
 .data {
-  color: var(--secondary-color);
+  color: #666;
   font-size: 0.9rem;
-  font-weight: 500;
-  margin-bottom: 1rem;
-  display: block;
 }
 
+/* Botões */
 .btn-ler-mais {
-  background-color: var(--secondary-color);
-  color: var(--white);
+  background-color: #333;
+  color: white;
   border: none;
-  padding: 0.8rem 1.5rem;
-  border-radius: 25px;
+  padding: 0.5rem 1rem;
+  border-radius: 3px;
   cursor: pointer;
-  font-weight: 600;
-  transition: all 0.3s ease;
+  margin-top: 1rem;
 }
 
 .btn-ler-mais:hover {
-  background-color: var(--primary-color);
-  transform: scale(1.05);
-}
-
-.novo-post-form {
-  background-color: var(--white);
-  padding: 2rem;
-  margin-bottom: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.novo-post-form h3 {
-  color: var(--primary-color);
-  margin-bottom: 1.5rem;
-  font-size: 1.5rem;
-}
-
-.novo-post-form input,
-.novo-post-form textarea {
-  width: 100%;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
-}
-
-.novo-post-form input:focus,
-.novo-post-form textarea:focus {
-  outline: none;
-  border-color: var(--secondary-color);
+  background-color: #555;
 }
 
 .btn-criar-post {
-  background-color: var(--accent-color);
-  color: var(--white);
+  background-color: #4caf50;
+  color: white;
   border: none;
-  padding: 0.8rem 1.5rem;
-  border-radius: 25px;
+  padding: 0.5rem 1rem;
+  border-radius: 3px;
   cursor: pointer;
-  font-weight: 600;
-  transition: all 0.3s ease;
 }
 
 .btn-criar-post:hover {
-  background-color: #c0392b;
-  transform: scale(1.05);
+  background-color: #45a049;
 }
 
-footer {
-  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-  color: var(--white);
-  text-align: center;
+.perfil {
+  background-color: white;
   padding: 1.5rem;
-  margin-top: 2rem;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 @media (max-width: 768px) {
@@ -252,39 +167,39 @@ footer {
   .post {
     padding: 1.5rem;
   }
+
 }
 
-.titulo-descricao {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+footer {
+  background-color: #333;
+  color: white;
   text-align: center;
-  max-width: 600px;
-}
-.titulo-descricao h2 {
-  margin-bottom: 10px; 
-}
-
-.titulo-descricao p {
-  font-size: 18px;
-  color: #666;}
-
-.sobre {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  max-width: 600px;
+  padding: 1rem;
+  position: relative;
+  bottom: 0;
+  width: 100%;
 }
 
-.contato {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  max-width: 600px;
+.novo-post-form {
+  background-color: white;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+.novo-post-form input,
+.novo-post-form textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+.novo-post-form textarea {
+  max-width: 100%;
+  max-height: 150px;
+  overflow-y: auto;
+  resize: vertical;
+}
