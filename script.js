@@ -1,3 +1,83 @@
+const API_URL = "http://localhost:3000/posts";
+
+async function fetchPosts() {
+  try {
+    const response = await fetch(API_URL);
+    if (!response.ok) throw new Error("Erro ao buscar posts");
+
+    const posts = await response.json();
+    const postsContainer = document.getElementById("posts");
+
+    postsContainer.innerHTML = "";
+
+    posts.forEach(({ titulo, conteudo, data }) => {
+      adicionarPost(titulo, conteudo, data);
+    });
+  } catch (error) {
+    console.error("Erro ao carregar posts:", error);
+  }
+}
+
+async function salvarPost(titulo, conteudo) {
+  try {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        titulo,
+        conteudo,
+        data: new Date().toLocaleDateString(),
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Erro ao salvar post");
+    }
+
+    await fetchPosts();
+  } catch (error) {
+    console.error("Erro ao salvar post:", error);
+  }
+}
+
+function adicionarPost(titulo, conteudo, data) {
+  const posts = document.getElementById("posts");
+  const novoPost = document.createElement("article");
+  novoPost.className = "post";
+
+  // Use a proper template string for innerHTML
+  novoPost.innerHTML = `
+    <h2>${titulo}</h2>
+    <span class="data">${data}</span>
+    <p>${conteudo}</p>
+    <button class="btn-ler-mais">Ler mais</button>
+  `;
+
+  // Insert the new post at the top
+  posts.insertBefore(novoPost, posts.firstChild);
+
+  // Add the 'Ler mais' / 'Ler menos' toggle event
+  adicionarEventoBotaoLerMais(novoPost.querySelector(".btn-ler-mais"));
+}
+
+function criarNovoPost() {
+  const titulo = document.getElementById("titulo-post").value;
+  const conteudo = document.getElementById("conteudo-post").value;
+
+  if (titulo.trim() === "" || conteudo.trim() === "") {
+    alert("Por favor, preencha todos os campos!");
+    return;
+  }
+
+  // Save the post (makes a POST request)
+  salvarPost(titulo, conteudo);
+
+  // Clear the input fields
+  document.getElementById("titulo-post").value = "";
+  document.getElementById("conteudo-post").value = "";
+}
+
+// Toggle expand/collapse text
 function adicionarEventoBotaoLerMais(botao) {
   botao.addEventListener("click", () => {
     const post = botao.parentElement;
@@ -13,61 +93,5 @@ function adicionarEventoBotaoLerMais(botao) {
   });
 }
 
-function salvarPosts() {
-  const posts = Array.from(document.querySelectorAll(".post")).map((post) => {
-    const titulo = post.querySelector("h2").textContent;
-    const data = post.querySelector(".data").textContent;
-    const conteudo = post.querySelector("p").textContent;
-    return { titulo, data, conteudo };
-  });
-  localStorage.setItem("posts", JSON.stringify(posts));
-}
-
-function carregarPosts() {
-  const postsSalvos = JSON.parse(localStorage.getItem("posts") || "[]");
-  postsSalvos.forEach(({ titulo, data, conteudo }) => {
-    adicionarPost(titulo, conteudo, data);
-  });
-}
-
-function adicionarPost(
-  titulo,
-  conteudo,
-  data = new Date().toLocaleDateString(),
-) {
-  const posts = document.getElementById("posts");
-  const novoPost = document.createElement("article");
-  novoPost.className = "post";
-
-  novoPost.innerHTML = `
-        <h2>${titulo}</h2>
-        <span class="data">${data}</span>
-        <p>${conteudo}</p>
-        <button class="btn-ler-mais">Ler mais</button>
-    `;
-
-  posts.insertBefore(novoPost, posts.firstChild);
-
-  const novoBotao = novoPost.querySelector(".btn-ler-mais");
-  adicionarEventoBotaoLerMais(novoBotao);
-
-  salvarPosts();
-}
-
-function criarNovoPost() {
-  const titulo = document.getElementById("titulo-post").value;
-  const conteudo = document.getElementById("conteudo-post").value;
-
-  if (titulo.trim() === "" || conteudo.trim() === "") {
-    alert("Por favor, preencha todos os campos!");
-    return;
-  }
-
-  adicionarPost(titulo, conteudo);
-
-  document.getElementById("titulo-post").value = "";
-  document.getElementById("conteudo-post").value = "";
-}
-
-// Carregar posts ao iniciar a página
-document.addEventListener("DOMContentLoaded", carregarPosts);
+// Fetch posts when the page loads
+document.addEventListener("DOMContentLoaded", fetchPosts);
