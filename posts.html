@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
@@ -20,16 +20,25 @@
     </header>
 
     <main>
-      <h2>Posts Recentes</h2>
-      <div class="novo-post-form">
-        <h3>Criar Novo Post</h3>
-        <input type="text" id="titulo-post" placeholder="Título do post" />
-        <textarea id="conteudo-post" placeholder="Conteúdo do post"></textarea>
-        <button onclick="criarNovoPost()" class="btn-criar-post">
-          Criar Post
-        </button>
+      <!-- Coluna da esquerda - Posts -->
+      <div class="posts-container">
+        <h2>Posts Recentes</h2>
+        <div id="posts">
+          <!-- Posts serão inseridos aqui pelo JavaScript -->
+        </div>
       </div>
-      <section id="posts"></section>
+
+      <!-- Coluna da direita - Formulário -->
+      <div class="sidebar">
+        <div class="novo-post-form">
+          <h3>Criar Novo Post</h3>
+          <input type="text" id="titulo-post" placeholder="Título do post" />
+          <textarea id="conteudo-post" placeholder="Conteúdo do post"></textarea>
+          <button onclick="criarNovoPost()" class="btn-criar-post">
+            Criar Post
+          </button>
+        </div>
+      </div>
     </main>
 
     <footer>

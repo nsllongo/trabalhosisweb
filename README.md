@@ -16,4 +16,4 @@ Um blog pessoal responsivo desenvolvido com HTML, CSS e JavaScript puro.
 - CSS3
 - JavaScript
 
-## 📦 Estrutura do Projeto 
+   
